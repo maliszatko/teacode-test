@@ -6,6 +6,7 @@ export const StyledContactItem = styled.li`
   margin: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #ccc;
+  cursor: pointer;
 `
 
 export const StyledContactList = styled.ul`

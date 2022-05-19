@@ -1,26 +1,25 @@
-import React, { useMemo, useEffect, useContext } from 'react'
-import { sortBy } from "lodash"
+import React, { useEffect, useContext } from 'react'
 import { StyledContactList, ContactSection } from "./StyledComponents";
 import ContactItem from "./ContactItem";
 import ContactContext from "../store/ContactContext";
 import TextField from "@mui/material/TextField";
+import { trackPromise } from 'react-promise-tracker';
+
 
 const ContactList = () => {
 
     const contactCtx = useContext(ContactContext)
+    console.log(contactCtx.selectedContacts.map(contact => contact.id))
 
     useEffect(() => {
-        console.log("REFRESH")
-        fetch('https://teacode-recruitment-challenge.s3.eu-central-1.amazonaws.com/users.json')
+        trackPromise(fetch('https://teacode-recruitment-challenge.s3.eu-central-1.amazonaws.com/users.json')
             .then(response => { return response.json()})
-            .then(data => contactCtx.initialize(data))
+            .then(data => contactCtx.initialize(data)))
     }, [])
-    const sortedList = useMemo(() => {
-        return sortBy(contactCtx.displayedContacts, ['last_name'])
-    })
-    const contactitem = sortedList.map(contact => {return <ContactItem key={contact.id} onClick={contactCtx.select.bind(null, contact)} contact={contact}/>})
+    const contactitem = contactCtx.displayedContacts.map(contact => {return <ContactItem key={contact.id} contact={contact}/>})
     const onChangeHandler = (e) => {
-        contactCtx.filter(e.target.value.toLowerCase())
+        setTimeout(() => contactCtx.filter(e.target.value.toLowerCase()), 500)
+        return () => {}
     }
     return (
         <ContactSection>
