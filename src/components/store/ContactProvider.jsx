@@ -21,7 +21,7 @@ const contactReducer = (state, action) => {
         case "INITIALIZE":
             return {selectedContacts: state.selectedContacts, displayedContacts: action.contacts, allContacts: action.contacts}
         case "FILTER":
-            const filteredContacts = filter(state.allContacts, v => v.first_name.toLowerCase().includes(action.searchTerm))
+            const filteredContacts = filter(state.allContacts, v => v.first_name.toLowerCase().includes(action.searchTerm) || v.last_name.toLowerCase().includes(action.searchTerm))
             return {selectedContacts: state.selectedContacts, displayedContacts: filteredContacts, allContacts: state.allContacts}
 
     }

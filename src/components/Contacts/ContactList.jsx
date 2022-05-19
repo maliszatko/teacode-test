@@ -17,7 +17,7 @@ const ContactList = () => {
     }, [])
     const sortedList = useMemo(() => {
         return sortBy(contactCtx.displayedContacts, ['last_name'])
-    }, contactCtx.displayedContacts)
+    })
     const contactitem = sortedList.map(contact => {return <ContactItem key={contact.id} onClick={contactCtx.select.bind(null, contact)} contact={contact}/>})
     const onChangeHandler = (e) => {
         contactCtx.filter(e.target.value.toLowerCase())
